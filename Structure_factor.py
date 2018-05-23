@@ -127,49 +127,14 @@ def S(K, eta, z):
         def a(K): return A*(sin(K)-K*cos(K))/K**3+B*((2/K**2-1)*K*cos(K)+2*sin(K)-2/K)/K**3+eta*A*(24/K**3+4*(1-6/K**2)*sin(K)-(1-12/K**2+24/K**4)*K*cos(K))/(2*K**3)+C*(k*cosh(k)*sin(K)-K*sinh(k)*cos(K))/(K*(K**2+k**2))+F1*(k*sinh(k)*sin(K)-K*(cosh(k)*cos(K)-1))/(K*(K**2+k**2))+F1*(cos(K)-1)/K**2-gamma*exp(-k)*(k*sin(K)+K*cos(K))/(K*(K**2+k**2))
         return 1./(1-24*eta*a(K))
 
-##def Roots(Pol):
-##        a, b, c, d, e=Pol[0], Pol[1], Pol[2], Pol[3], Pol[4]
-##        Delta1=2*c**3-9*b*c*d+27*b**2*e+27*a*d**2-72*a*c*e
-##        Delta0=c**2-3*b*d+12*a*e
-##        p=(8*a*c-3*b**2)/(8*a**2)
-##        q=(b**3-4*a*b*c+8*a**2*d)/(8*a**3)
-##        Q=((Delta1+cm.sqrt(Delta1**2-4*Delta0**3))/2.)**(1/3.)
-##        S=0.5*cm.sqrt(-2.*p/3.+(Q+Delta0/Q)/(3*a))
-##        x1=-b/(4*a)-S+0.5*cm.sqrt(-4*S**2-2*p+q/S)
-##        x2=-b/(4*a)-S-0.5*cm.sqrt(-4*S**2-2*p+q/S)
-##        x3=-b/(4*a)+S+0.5*cm.sqrt(-4*S**2-2*p-q/S)
-##        x4=-b/(4*a)+S-0.5*cm.sqrt(-4*S**2-2*p-q/S)
-##        return[x1, x2, x3, x4]
-
-##F=[(355.2356088313686+0j), (34.52280307121762+0j)]
-##F1=F[1]
-####F1=1.044401290385264e-07
-##C=-(omega16*F1**2+omega15*F1+omega14)/(omega13*F1+omega12)
-##B=b1+b2*C+b3*F1
-##A=a1+a2*C+a3*F1
-##def a(K): return A*(sin(K)-K*cos(K))/K**3+B*((2/K**2-1)*K*cos(K)+2*sin(K)-2/K)/K**3+eta*A*(24/K**3+4*(1-6/K**2)*sin(K)-(1-12/K**2+24/K**4)*K*cos(K))/(2*K**3)+C*(k*cosh(k)*sin(K)-K*sinh(k)*cos(K))/(K*(K**2+k**2))+F1*(k*sinh(k)*sin(K)-K*(cosh(k)*cos(K)-1))/(K*(K**2+k**2))+F1*(cos(K)-1)/K**2-gamma*exp(-k)*(k*sin(K)+K*cos(K))/(K*(K**2+k**2))
-##def S(K): return 1./(1-24*eta*a(K))
-####
-##def integrand(K, x): return (S(K)-1.)*K*sin(K*x)
-####def I(x): return quad(integrand, 0, np.inf, args=(x))
-##def g(x): return 1.+ (quad(integrand, 0, np.inf, args=(x))[0])/(12*eta*pi*x)
-##
-##X=np.arange(0.01, 20, 0.01)
-##Y=[S(x) for x in X]
-##pylab.plot(X, Y, 'k-')
-##pylab.xlabel("Q*sigma")
-##pylab.ylabel("S(Q*sigma)")
-##pylab.title("Structure Factor")
-##pylab.show()
-
 ##Z=[0, 10, 20, 50, 100, 200]
 ##col=['--','k-', 'r-', '-', 'g-', 'y-']
 ##for i in range(len(Z)):        
 ##        X=np.arange(0.01, 20, 0.01)
 ##        Y=[S(x, 0.05, Z[i]) for x in X]
 ##        pylab.plot(X, Y, col[i])
-##pylab.xlabel("Q*sigma")
-##pylab.ylabel("S(Q*sigma)")
+##pylab.xlabel("Q$\sigma$")
+##pylab.ylabel("S(Q$\sigma$)")
 ##pylab.title("Structure Factor")
 ##pylab.show()
 
@@ -183,7 +148,8 @@ def S(K, eta, z):
 ##Y=[np.log(P(q, R)) for q in X]
 ##pylab.plot(X, Y)
 ##pylab.show()
-R=1.
+
+R=1. 
 def F(q): return (4*pi*R**3)*(sin(q*R)-q*R*cos(q*R))/(q*R)**3
 def P(q): return F(q)**2
 def I(q): return P(q)*S(q, 0.05, 20)
@@ -191,9 +157,7 @@ def I(q): return P(q)*S(q, 0.05, 20)
 ##X=np.arange(0.01, 20, 0.01)
 ##Y=[I(x) for x in X]
 ##pylab.plot(X, Y, 'k-')
-##pylab.xlabel("Q*sigma")
-##pylab.ylabel("S(Q*sigma)")
-##pylab.title("Structure Factor")
+
 ##pylab.show()
 
 
