@@ -2,7 +2,8 @@ import math
 import numpy as np
 import cmath as cm
 import pylab
-from scipy.integrate import quad
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
 
 pi=np.pi
 ##eta=0.3 #initial value
@@ -127,53 +128,80 @@ def S(K, eta, z):
         def a(K): return A*(sin(K)-K*cos(K))/K**3+B*((2/K**2-1)*K*cos(K)+2*sin(K)-2/K)/K**3+eta*A*(24/K**3+4*(1-6/K**2)*sin(K)-(1-12/K**2+24/K**4)*K*cos(K))/(2*K**3)+C*(k*cosh(k)*sin(K)-K*sinh(k)*cos(K))/(K*(K**2+k**2))+F1*(k*sinh(k)*sin(K)-K*(cosh(k)*cos(K)-1))/(K*(K**2+k**2))+F1*(cos(K)-1)/K**2-gamma*exp(-k)*(k*sin(K)+K*cos(K))/(K*(K**2+k**2))
         return 1./(1-24*eta*a(K))
 
-##Z=[0, 10, 20, 50, 100, 200]
-##col=['--','k-', 'r-', '-', 'g-', 'y-']
-##for i in range(len(Z)):        
-##        X=np.arange(0.01, 20, 0.01)
-##        Y=[S(x, 0.05, Z[i]) for x in X]
-##        pylab.plot(X, Y, col[i])
-##pylab.xlabel("Q$\sigma$")
-##pylab.ylabel("S(Q$\sigma$)")
-##pylab.title("Structure Factor")
-##pylab.show()
+
+
+Z=[10, 20, 50, 100, 200]
+col=['k-', 'r-', '-', 'g-', 'y-']
+pylab.rcParams.update({'font.size':25})
+
+
+legend_elements = [Line2D([0], [0], color='k', lw=1, label='z=10'),
+                   Line2D([0], [0], color='r', lw=1, label='z=20'),
+                   Line2D([0], [0], color='b', lw=1, label='z=50'),
+                   Line2D([0], [0], color='g', lw=1, label='z=100'),
+                   Line2D([0], [0], color='y', lw=1, label='z=200')]
+
+for i in range(len(Z)):        
+        X=np.arange(0.01, 20, 0.01)
+        Y=[S(x, 0.3, Z[i]) for x in X]
+        pylab.plot(X, Y, col[i])
+pylab.xlabel("Q$\sigma$")
+pylab.ylabel("S(Q$\sigma$)")
+##pylab.title("Structure Factor for z=20, $\eta$=0.3")
+pylab.title("Structure Factor plots with varying z, $\eta$=0.05, $\sigma$=5nm, $\kappa$$\sigma$=2.0")
+pylab.legend(handles=legend_elements)
+pylab.show()
 
 ##import pylab
 ##
 ##def F(q, R): return (4*np.pi*R**3)*(np.sin(q*R)-q*R*np.cos(q*R))/(q*R)**3
 ##def P(q, R): return F(q, R)**2
 
-##R=1.
-##X=np.linspace(0.1, 20, 1000)*R
-##Y=[np.log(P(q, R)) for q in X]
-##pylab.plot(X, Y)
-##pylab.show()
-
-R=1. 
 def F(q): return (4*pi*R**3)*(sin(q*R)-q*R*cos(q*R))/(q*R)**3
-def P(q): return F(q)**2
-def I(q): return P(q)*S(q, 0.05, 20)
+##def F(q): return (sin(q)-q*cos(q))/q**3
+def P(q): return F(q)*F(q)
+def I(q): return S(q, 0.3, 20)*P(q)
 
-##X=np.arange(0.01, 20, 0.01)
-##Y=[I(x) for x in X]
+##X=np.linspace(0.1, 20, 1000)
+##Y1=[S(q, 0.03, 20) for q in X]
+##Y2=[P(q) for q in X]
+##Y3=[I(q) for q in X]
+####pylab.plot(X, Y1, 'k-')
+##pylab.plot(X, Y2, 'r--')
+####pylab.plot(X, Y3, '-')
+##pylab.xlim(0, 5)
+##pylab.show()
+
+##R=1
+##pylab.rcParams.update({'font.size':25})
+##
+##X=np.linspace(0.01, 20, 1000)
+##Y=[np.log(P(x)) for x in X]
 ##pylab.plot(X, Y, 'k-')
-
+##pylab.ylabel("log(P(Q$\sigma$))")
+##pylab.xlabel("Q$\sigma$")
+##pylab.title("Form Factor")
+##pylab.text(4.19, -15, '4.49', style='italic')
+##pylab.text(7, -15, '7.73', style='italic')
 ##pylab.show()
 
 
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+##import matplotlib.pyplot as plt
+##from mpl_toolkits.mplot3d import Axes3D
+##
+##Eta=np.linspace(0.01, 0.3, 100)
+##X=np.linspace(3, 7, 100)
+##fig=plt.figure()
+##ax=plt.axes(projection='3d')
+##for eta in Eta:
+##        Z=[S(X[i], eta, 50) for i in range(len(Eta))]
+##        ax.plot3D([eta]*100, X, Z, 'red')
+##
+##ax.set_ylabel('Q$\sigma$')
+##ax.set_xlabel('$\eta$')
+##ax.set_zlabel('S(Q$\sigma$)')
+##plt.title('Isometric plot, $\psi_0$=180 mV, k=2, z=50')
+##plt.show()
 
-Eta=np.linspace(0.01, 0.3, 100)
-X=np.linspace(3, 7, 100)
-fig=plt.figure()
-ax=plt.axes(projection='3d')
-for eta in Eta:
-        Z=[S(X[i], eta, 50) for i in range(len(Eta))]
-        ax.plot3D([eta]*100, X, Z, 'red')
 
-ax.set_ylabel('Q$\sigma$')
-ax.set_xlabel('$\eta$')
-ax.set_zlabel('S(Q$\sigma$)')
-plt.title('Isometric plot, $\psi_0$=180 mV, k=2, z=50')
-plt.show()
+
